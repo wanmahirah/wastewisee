@@ -104,8 +104,19 @@ class _CollectionStatusPageState extends State<CollectionStatusPage> {
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
-                    title: Text(
-                        'Bin ID: ${index + 1} Location: ${binLocations[index]}'),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Bin ID: ${index + 1}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Location: ${binLocations[index]}',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                     value: binStatus[index],
                     onChanged: (bool? value) {
                       updateBinStatus(index, value ?? false);

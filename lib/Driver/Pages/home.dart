@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:wastewisee/Driver/Pages/about.dart';
+import 'package:wastewisee/Driver/Pages/helpcenter.dart';
+import 'package:wastewisee/Driver/Pages/profile.dart';
+import 'package:wastewisee/Driver/Pages/route.dart';
+import 'package:wastewisee/Driver/Pages/settings.dart';
+import 'package:wastewisee/Driver/Pages/status.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<String> bannerImages = [
@@ -40,37 +46,55 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to Profile screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DriverProfilePage()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.map),
             onPressed: () {
-              // Navigate to Route Overview screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MapPage()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.checklist_rtl),
             onPressed: () {
-              // Navigate to Collection Status screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CollectionStatusPage()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.help),
             onPressed: () {
-              // Navigate to Help Center screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DriverHelpCenter()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
-              // Navigate to Settings screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.info),
             onPressed: () {
-              // Navigate to About Us screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUs()),
+              );
             },
           ),
         ],

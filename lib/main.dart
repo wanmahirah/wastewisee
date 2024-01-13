@@ -1,14 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wastewisee/Driver/Pages/home.dart';
 import 'package:wastewisee/Driver/Pages/intro.dart';
-import 'package:wastewisee/Driver/Pages/mainpage.dart';
+import 'package:wastewisee/Driver/Pages/profile.dart';
 import 'package:wastewisee/Driver/Pages/route.dart';
-import 'package:wastewisee/Driver/Pages/settings.dart';
 import 'package:wastewisee/Driver/Pages/status.dart';
+import 'package:wastewisee/Driver/Pages/settings.dart';
 import 'package:wastewisee/api/firebase_api.dart';
 import 'package:wastewisee/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +40,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+  String name = '';
+  String email = '';
+  String _driverProfileImageUrl = '';
+
   final List<Widget> _pages = [
     HomeScreen(),
     MapPage(),
@@ -45,10 +51,54 @@ class _MyHomePageState extends State<MyHomePage> {
     SettingsPage(),
   ];
 
+// Function to fetch driver information from Firestore
+  Future<void> _fetchDriverInfo() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        DocumentSnapshot driverSnapshot =
+        await FirebaseFirestore.instance.collection('Driver').doc(user.uid).get();
+
+        if (driverSnapshot.exists) {
+          setState(() {
+            name = driverSnapshot['name'] ?? '';
+            email = user.email ?? '';
+            _driverProfileImageUrl = driverSnapshot['profileImageUrl'] ?? '';
+          });
+
+          print('Name: $name');
+          print('Email: $email');
+          print('Profile Image URL: $_driverProfileImageUrl');
+        } else {
+          print("User document does not exist in Firestore.");
+        }
+      } catch (e) {
+        print("Error fetching driver info: $e");
+      }
+    }
+  }
+
+  void initState() {
+    super.initState();
+    _fetchDriverInfo();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => IntroPage()),
+      );
+    } catch (e) {
+      print("Error while signing out: $e");
+    }
   }
 
   @override
@@ -74,19 +124,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         CircleAvatar(
                           radius: 30,
-                          // Replace with your profile image
-                          backgroundImage: AssetImage('assets/profile_image.jpg'),
+                          backgroundImage: (_driverProfileImageUrl.isNotEmpty
+                              ? NetworkImage(_driverProfileImageUrl)
+                              : AssetImage('assets/profile_image.jpg')) as ImageProvider<Object>?,
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Driver Name',
+                          name,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                           ),
                         ),
                         Text(
-                          'driver@example.com',
+                          email,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -99,7 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Icon(Icons.person),
                     title: Text('Driver Profile'),
                     onTap: () {
-                      // Add your driver profile logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DriverProfilePage()),
+                      );
                     },
                   ),
                   ListTile(
@@ -124,7 +178,8 @@ class _MyHomePageState extends State<MyHomePage> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
-                // Add your logout logic here
+                // Call the sign-out function when the logout button is tapped
+                _signOut();
               },
             ),
           ],

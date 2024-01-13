@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(SettingsPage());
-}
+import 'package:wastewisee/Driver/Pages/profile.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -31,7 +28,10 @@ class SettingsList extends StatelessWidget {
           title: Text('Account Settings'),
           onTap: () {
             // Navigate to account settings page
-            // Implement navigation logic here
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DriverProfilePage()),
+            );
           },
         ),
         ListTile(
