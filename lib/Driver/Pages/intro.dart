@@ -94,7 +94,7 @@ class IntroPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return DLoginPage(); // Replace with DriverLoginPage();
+                        return MyHomePage();
                       },
                     ),
                   ),

@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:wastewisee/Driver/Pages/about.dart';
+import 'package:wastewisee/Driver/Pages/helpcenter.dart';
 import 'package:wastewisee/Driver/Pages/home.dart';
 import 'package:wastewisee/Driver/Pages/intro.dart';
 import 'package:wastewisee/Driver/Pages/profile.dart';
@@ -160,14 +162,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Icon(Icons.help),
                     title: Text('Help Center'),
                     onTap: () {
-                      // Add your help center logic here
-                    },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HelpCenterPage()),
+                      );                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.info),
                     title: Text('About Us'),
                     onTap: () {
-                      // Add your about us logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AboutUsPage()),
+                      );
                     },
                   ),
                 ],

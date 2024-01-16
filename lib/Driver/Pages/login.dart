@@ -5,7 +5,7 @@ import 'package:wastewisee/Driver/Pages/forgotpassword.dart';
 import 'package:wastewisee/main.dart';
 
 class DLoginPage extends StatefulWidget {
-  const DLoginPage({Key? key}) : super(key: key);
+  const DLoginPage({super.key});
 
   @override
   _DLoginPageState createState() => _DLoginPageState();

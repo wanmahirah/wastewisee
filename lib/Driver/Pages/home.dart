@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DriverHelpCenter()),
+                MaterialPageRoute(builder: (context) => HelpCenterPage()),
               );
             },
           ),
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutUs()),
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
               );
             },
           ),
